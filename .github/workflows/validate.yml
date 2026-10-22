@@ -1,0 +1,16 @@
+name: Validate configuration
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: python3 scripts/validate.py
+      - run: bash -n scripts/sync.sh scripts/build.sh

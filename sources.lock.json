@@ -1,0 +1,39 @@
+{
+  "checked": "2026-10-22",
+  "base": {
+    "url": "https://github.com/LineageOS/android.git",
+    "branch": "lineage-23.2",
+    "note": "Base projects track upstream; resolved-manifest.xml is captured for each build."
+  },
+  "projects": [
+    {
+      "name": "xiaomi-sm6375-devs/android_device_xiaomi_gemstone",
+      "path": "device/xiaomi/gemstone",
+      "revision": "aa03d44fb92edb9220187a2ebe5706b446a229e5",
+      "branch": "lineage-23.2"
+    },
+    {
+      "name": "xiaomi-sm6375-devs/android_device_xiaomi_sm6375-common",
+      "path": "device/xiaomi/sm6375-common",
+      "revision": "4cd108d5cd933e5cdaf1293bee233621e8008ac8",
+      "branch": "lineage-23.2"
+    },
+    {
+      "name": "xiaomi-sm6375-devs/android_kernel_xiaomi_moonstone",
+      "path": "kernel/xiaomi/sm6375",
+      "revision": "dfbf1e20a3bd42f81c16d80796066a59124107bc",
+      "branch": "lineage-23.2"
+    },
+    {
+      "name": "LineageOS/android_hardware_xiaomi",
+      "path": "hardware/xiaomi",
+      "revision": "b72a93939350632d3033b1218b10af0f9c0ae5c2",
+      "branch": "lineage-23.2"
+    }
+  ],
+  "missing": [
+    "vendor/xiaomi/gemstone",
+    "vendor/xiaomi/sm6375-common"
+  ],
+  "verification": "Repository refs and source configuration inspected; no full sync, compile, boot or hardware test performed."
+}

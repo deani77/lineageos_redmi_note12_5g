@@ -1,0 +1,67 @@
+name: Build unofficial LineageOS 23.2
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: gemstone-rom-build
+  cancel-in-progress: false
+jobs:
+  build:
+    # Configure this environment and dedicated runner before dispatch.
+    if: github.ref == 'refs/heads/main'
+    environment: rom-build
+    runs-on: [self-hosted, linux, x64, android-rom]
+    timeout-minutes: 1440
+    env:
+      ROM_SOURCE_DIR: ${{ vars.ROM_SOURCE_DIR }}
+      ROM_LOG_DIR: ${{ runner.temp }}/gemstone-logs-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check runner provisioning
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${ROM_SOURCE_DIR:?Configure the ROM_SOURCE_DIR environment variable}"
+          [[ "$ROM_SOURCE_DIR" = /* && -d "$ROM_SOURCE_DIR" ]]
+          [[ "$(uname -sm)" = "Linux x86_64" ]]
+          for tool in repo git git-lfs python3 make ninja javac lz4 unzip zip; do
+            command -v "$tool"
+          done
+          available_kb="$(df -Pk "$ROM_SOURCE_DIR" | awk 'NR==2 {print $4}')"
+          (( available_kb >= 400 * 1024 * 1024 )) ||
+            { echo "Requires at least 400 GiB free for sync and build"; exit 1; }
+          memory_kb="$(awk '/MemTotal:/ {print $2}' /proc/meminfo)"
+          (( memory_kb >= 60 * 1024 * 1024 )) ||
+            { echo "Provision a runner with at least 64 GB RAM"; exit 1; }
+      - name: Sync source without destructive resets
+        run: bash scripts/sync.sh
+      - name: Check dependencies and build
+        shell: bash
+        run: |
+          set -eo pipefail
+          mkdir -p "$ROM_LOG_DIR"
+          bash scripts/build.sh 2>&1 | tee "$ROM_LOG_DIR/session.log"
+      - name: Upload logs and resolved source revisions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemstone-build-logs
+          path: ${{ env.ROM_LOG_DIR }}
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload ROM and recovery images
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lineage-23.2-UNOFFICIAL-gemstone
+          path: |
+            ${{ env.ROM_SOURCE_DIR }}/out/target/product/gemstone/lineage-23.2-*-UNOFFICIAL-gemstone.zip
+            ${{ env.ROM_SOURCE_DIR }}/out/target/product/gemstone/boot.img
+            ${{ env.ROM_SOURCE_DIR }}/out/target/product/gemstone/vendor_boot.img
+            ${{ env.ROM_SOURCE_DIR }}/out/target/product/gemstone/dtbo.img
+            ${{ env.ROM_SOURCE_DIR }}/out/target/product/gemstone/vbmeta.img
+          if-no-files-found: error
+          retention-days: 7

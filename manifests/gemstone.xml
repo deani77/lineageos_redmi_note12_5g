@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local additions to LineageOS/android, branch lineage-23.2.
+     Proprietary vendor trees must be extracted separately; see docs/SOURCES.md. -->
+<manifest>
+  <remote name="gemstone-github" fetch="https://github.com/" />
+  <project name="xiaomi-sm6375-devs/android_device_xiaomi_gemstone" path="device/xiaomi/gemstone" remote="gemstone-github" revision="aa03d44fb92edb9220187a2ebe5706b446a229e5" upstream="refs/heads/lineage-23.2" />
+  <project name="xiaomi-sm6375-devs/android_device_xiaomi_sm6375-common" path="device/xiaomi/sm6375-common" remote="gemstone-github" revision="4cd108d5cd933e5cdaf1293bee233621e8008ac8" upstream="refs/heads/lineage-23.2" />
+  <project name="xiaomi-sm6375-devs/android_kernel_xiaomi_moonstone" path="kernel/xiaomi/sm6375" remote="gemstone-github" revision="dfbf1e20a3bd42f81c16d80796066a59124107bc" upstream="refs/heads/lineage-23.2" />
+  <project name="LineageOS/android_hardware_xiaomi" path="hardware/xiaomi" remote="gemstone-github" revision="b72a93939350632d3033b1218b10af0f9c0ae5c2" upstream="refs/heads/lineage-23.2" />
+</manifest>
