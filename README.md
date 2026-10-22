@@ -76,9 +76,11 @@ The full build runs only by manual dispatch on main; pull requests run only the
 configuration checks on GitHub-hosted runners. The workflow requests read-only
 repository permission and needs no repository token or signing secret.
 Actual artifact upload also depends on Actions being enabled and storage quota.
-Environment, runner registration and Actions settings were not provisioned or
-verified by this session: the connector cannot inspect Actions permissions.
-A build can queue indefinitely if no matching runner is registered.
+Actions is enabled: configuration CI passed on GitHub. The Actions UI confirms
+there are no self-hosted runners registered for this repository. Register the
+runner and configure the environment before dispatching a full build; otherwise
+it can remain queued. Administrative Actions policy and artifact quota were not
+verified; the connector cannot inspect the Actions permissions endpoint.
 
 Each build saves a resolved manifest because the base LineageOS projects still
 track a branch. The four local additions are pinned; this is not a complete

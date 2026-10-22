@@ -78,8 +78,17 @@ maintainer confirmation; a blob fingerprint is not a flashing instruction.
 
 - Target repository inspected as public and empty; GitHub connection reports
   push/admin permission. Existing user files were therefore not overwritten.
-- GitHub Actions permission settings could not be read: the connector rejects
-  that API endpoint. Runner availability and artifact quota are unverified.
+- Actions is enabled and [configuration CI passed](https://github.com/deani77/lineageos_redmi_note12_5g/actions/runs/39705049345).
+  Local manifest/lock checks, shell syntax and YAML parsing also passed. The
+  missing-dependency check was exercised and correctly failed with explicit paths.
+- The Actions UI confirms no self-hosted runner is registered for this repository.
+  The rom-build environment and ROM_SOURCE_DIR still need provisioning.
+  Administrative Actions policy and artifact quota remain unverified because the
+  connector rejects the permissions endpoint.
+- The first build workflow definition had an invalid job-scope runner context.
+  This was fixed in commit cf416e01a2679ef77f023c63a481640314b51fff; GitHub now
+  displays the correctly named manual build workflow with a Run workflow button.
+  The historical failed validation run did not allocate a runner or compile a ROM.
 - This execution host is macOS ARM64 and has no repo tool. An ordinary Git clone
   also failed because shell network DNS is restricted. Source inspection used
   the connected GitHub API instead.
