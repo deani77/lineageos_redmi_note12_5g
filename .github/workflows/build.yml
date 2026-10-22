@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 1440
     env:
       ROM_SOURCE_DIR: ${{ vars.ROM_SOURCE_DIR }}
-      ROM_LOG_DIR: ${{ runner.temp }}/gemstone-logs-${{ github.run_id }}-${{ github.run_attempt }}
+      ROM_LOG_DIR: ${{ github.workspace }}/.build-logs/gemstone-logs-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
         with:
