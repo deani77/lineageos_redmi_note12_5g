@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-22",
+  "checked": "2026-11-08",
   "base": {
     "url": "https://github.com/LineageOS/android.git",
     "branch": "lineage-23.2",
@@ -27,7 +27,7 @@
     {
       "name": "LineageOS/android_hardware_xiaomi",
       "path": "hardware/xiaomi",
-      "revision": "b72a93939350632d3033b1218b10af0f9c0ae5c2",
+      "revision": "f71c6821019c542aa58c672bf4920cb2e58c34f3",
       "branch": "lineage-23.2"
     }
   ],
