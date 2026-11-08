@@ -1,6 +1,13 @@
 # Source verification and outstanding dependencies
 
-Checked 2026-10-22 through GitHub repository refs and file contents.
+Rechecked 2026-11-08 through GitHub branch refs and upstream commit diffs.
+The device, common, and kernel pins still match their `lineage-23.2` heads.
+The Xiaomi hardware pin advances by one translation-only commit, adding the
+Spanish eSIM footer and updating Vietnamese wording. The LineageOS base advances
+by one manifest commit selecting LineageOS's Broadcom WLAN repository; the
+existing branch-based sync picks this up without a script change.
+This refresh did not perform a full source sync, vendor extraction, ROM build,
+boot, or hardware test. The vendor dependency gaps below remain unresolved.
 
 ## Verified source configuration
 
@@ -12,7 +19,7 @@ pins the inspected commits:
 | `device/xiaomi/gemstone` | [xiaomi-sm6375-devs/android_device_xiaomi_gemstone](https://github.com/xiaomi-sm6375-devs/android_device_xiaomi_gemstone/tree/aa03d44fb92edb9220187a2ebe5706b446a229e5) | `aa03d44fb92edb9220187a2ebe5706b446a229e5` |
 | `device/xiaomi/sm6375-common` | [xiaomi-sm6375-devs/android_device_xiaomi_sm6375-common](https://github.com/xiaomi-sm6375-devs/android_device_xiaomi_sm6375-common/tree/4cd108d5cd933e5cdaf1293bee233621e8008ac8) | `4cd108d5cd933e5cdaf1293bee233621e8008ac8` |
 | `kernel/xiaomi/sm6375` | [xiaomi-sm6375-devs/android_kernel_xiaomi_moonstone](https://github.com/xiaomi-sm6375-devs/android_kernel_xiaomi_moonstone/tree/dfbf1e20a3bd42f81c16d80796066a59124107bc) | `dfbf1e20a3bd42f81c16d80796066a59124107bc` |
-| `hardware/xiaomi` | [LineageOS/android_hardware_xiaomi](https://github.com/LineageOS/android_hardware_xiaomi/tree/b72a93939350632d3033b1218b10af0f9c0ae5c2) | `b72a93939350632d3033b1218b10af0f9c0ae5c2` |
+| `hardware/xiaomi` | [LineageOS/android_hardware_xiaomi](https://github.com/LineageOS/android_hardware_xiaomi/tree/f71c6821019c542aa58c672bf4920cb2e58c34f3) | `f71c6821019c542aa58c672bf4920cb2e58c34f3` |
 
 The [device BoardConfig](https://github.com/xiaomi-sm6375-devs/android_device_xiaomi_gemstone/blob/aa03d44fb92edb9220187a2ebe5706b446a229e5/BoardConfig.mk)
 sets `TARGET_OTA_ASSERT_DEVICE := moonstone,sunstone,gemstone` and
@@ -33,7 +40,7 @@ kernel and supplies `hardware/xiaomi`. The product is already local, so the
 build selects it directly without relying on roomservice to choose a kernel.
 
 The [LineageOS base manifest](https://github.com/LineageOS/android/tree/lineage-23.2)
-exists (observed head `9776e518de506f610218c4caa6c1fddff46873af`).
+exists (observed head `3f9562ae369330b3881d5f625cf3f5d97aad9537`).
 Its `snippets/lineage.xml` supplies Qualcomm platform projects, including the
 SM8350 audio stack, display stack and sepolicy. These remain upstream branch
 dependencies and have not all been cloned or compiled here.
@@ -74,7 +81,10 @@ files; that route and extraction were not tested in this session.
 Firmware requirements for the exact regional phone variant still need
 maintainer confirmation; a blob fingerprint is not a flashing instruction.
 
-## Build evidence and permissions
+## Historical build evidence and permissions (2026-10-22)
+
+The observations below describe the initial setup session; runner availability,
+permissions, and CI state were not rechecked as part of the source-pin refresh.
 
 - Target repository inspected as public and empty; GitHub connection reports
   push/admin permission. Existing user files were therefore not overwritten.
